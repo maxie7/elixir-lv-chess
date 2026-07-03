@@ -1,66 +1,44 @@
-# Chess - Doofinder Code Challenge 2022
+# ♟️ Real-Time Multiplayer Chess — Phoenix LiveView
 
-- **October 18 and 19, 2022 at the Doofinder offices at 63 Cronos Street**. 
-- Starts the 18th at 12:00 and ends on the 19th at 12:00.
-- The presentation and awards ceremony will be on the 19th at 15:30.
+A two-player online chess game where both boards update live over a single shared link — no page reloads, no polling. Built in a 24-hour individual hackathon at the **Doofinder Code Challenge 2022**, where it won the **Knight Award (most original project)**.
 
-## Please, read me
+> 🏆 **Knight Award — Most Original Project**, Doofinder Code Challenge (Oct 2022)
 
-**MAKE SURE YOU READ THE ENTIRE DOCUMENT AND PROPERLY UNDERSTAND IT BEFORE START CODING!!!**
+<!-- Replace with a short gameplay GIF: two browser windows, a move on one board appearing instantly on the other -->
+![Gameplay demo](https://user-images.githubusercontent.com/482075/194532319-b5dc8969-2737-4546-9f39-d6dc2b3a92b7.png)
 
-## Challenge Rules
+## What it does
 
-- Participation in the competition will be individual.
-- It's mandatory that all devs participate except the jury.
-- The jury will be made up of Antonio Gutiérrez, Carlos Escribano, Enrique Martínez and Manuel Dominguez.
-- **When the time available to code the application is over, the code will be pushed to the dev's own fork. If the application is not finished, what has been done will be uploaded.**
-- Each participant will show the application to the member of the jury he's assigned to for evaluation.
+- Real-time multiplayer chess for two players over the web.
+- Create a game at a shareable URL — send the link, your opponent joins, you're playing.
+- Moves render on both boards instantly via Phoenix LiveView (server-pushed, no client polling).
+- Legal-move validation, turn handling, and win detection.
+- Live game feedback in the UI.
 
-## Awards
+## How it works
 
-The prizes will be Amazon gift cards (no more than one prize per project):
+Game state lives server-side and is pushed to both connected clients over LiveView's websocket, so a move made by one player appears on the opponent's board with no refresh.
 
-- **King Award:** €100
-- **Queen Award:** €50
-- **Bishop Award:** €50
-- **Knight Award:** €50
+- The player who creates the game gets the **white** pieces.
+- Joining a game is just opening the shared `/game/:game_name` URL in another browser.
 
-## Project requisites
+## Tech
 
-- Create a web application to play chess with another player in real time ([chess rules in Spanish](https://es.wikipedia.org/wiki/Leyes_del_ajedrez)).
-- You must use Phoenix and Phoenix LiveView.
-- There must be a graphical UI to perform chess movements.
-- UI must be updated in real time.
-- UI must display which player won the game, if any.
-- Apart from the board, feel free to add user/game feedback and to decide how to display it.
-- Any other enhancement will be taken into account for the final score.
+- **Elixir** (1.12+) / **Phoenix** / **Phoenix LiveView**
+- Server-rendered, real-time UI — no separate JS frontend framework.
 
-### Scope
+Hackathon constraint: **no dependencies beyond those in `mix.exs`** were allowed. That meant no off-the-shelf chess library — move generation and validation are implemented from scratch in Elixir.
 
-The idea is that two players should be able to play a single game. You can make reasonable simplifications, like:
+## Running locally
 
-- Create a game by accessing a random URL like `/game/:game_name`. Sharing that URL the other player would be able to join the game.
-- The user that creates the game uses the white pieces.
+```bash
+# Requires Elixir 1.12+ (asdf recommended)
+mix deps.get
+mix phx.server
+```
 
-### Chess Board
+Open two browser windows at `http://localhost:4000`, create a game in one, share the URL to the other, and play.
 
-- There's a pre-defined chess board with styles you can use as a starting point. It looks like the one in the image below.
-- Final HTML is provided, you are responsible of generating the HTML based on your project's data models.
+---
 
-![imagen](https://user-images.githubusercontent.com/482075/194532319-b5dc8969-2737-4546-9f39-d6dc2b3a92b7.png)
-
-## Time to start coding!
-
-1. Press the _Fork_ button at the top-right part of the page to create your own copy.
-
-![imagen](https://user-images.githubusercontent.com/482075/194920831-23fb1e14-83c6-4327-a496-bde225a77561.png)
-
-2. Fill in the details.
-3. Clone your newly created repo.
-4. Make sure you use at least Elixir 1.12 (asdf!).
-5. Install dependencies.
-6. Think.
-7. Code.
-8. Remember to push your code to your fork!!!
-
-**IMPORTANT:** No other dependencies than those listed in `mix.exs` are allowed. Any extra dependency must be approved by the jury.
+<sub>Originally built from Doofinder's provided Phoenix chess template during the Oct 2022 code challenge.</sub>
